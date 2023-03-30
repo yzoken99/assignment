@@ -1,24 +1,34 @@
 import { useState } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { addDoc, collection } from 'firebase/firestore';
+import db from '../db/firebase';
+import { v4 as uuidv4 } from 'uuid';
+
 const Home = () => {
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: "",
         description: "",
         grading: "",
-        timing: ""
+        timing: "",
+        id:uuidv4()
     })
 
     const handleInputs = (field, value) => {
         setFormData({
             ...formData,
-            [field]:value
+            [field]: value
         })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        addDoc(collection(db, "quizes"), formData).then(() => {
+            navigate("/quizlist")
+        }).catch((error) => {
+            console.log(error);
+        });
     }
     return (
         <Row className='d-flex justify-content-center app'>
@@ -27,46 +37,46 @@ const Home = () => {
                     <h1 className='text-info text-center my-2'>Create Quiz</h1>
                     <Form.Group className="mb-3">
                         <Form.Label>Name</Form.Label>
-                        <Form.Control 
-                            type="text" 
-                            placeholder="Enter name" 
+                        <Form.Control
+                            type="text"
+                            placeholder="Enter name"
                             value={formData.name}
-                            onChange={(e)=> handleInputs("name", e.target.value)}
+                            onChange={(e) => handleInputs("name", e.target.value)}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                         <Form.Label>Description</Form.Label>
-                        <Form.Control 
-                            as="textarea" 
-                            rows={3} 
+                        <Form.Control
+                            as="textarea"
+                            rows={3}
                             value={formData.description}
-                            onChange={(e)=> handleInputs("description", e.target.value)}    
+                            onChange={(e) => handleInputs("description", e.target.value)}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Grading Point</Form.Label>
-                        <Form.Control 
-                            type="number" 
-                            placeholder="Enter grading" 
+                        <Form.Control
+                            type="number"
+                            placeholder="Enter grading"
                             value={formData.grading}
-                            onChange={(e)=> handleInputs("grading", e.target.value)}    
+                            onChange={(e) => handleInputs("grading", e.target.value)}
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Timing</Form.Label>
-                        <Form.Control 
-                            type="time" 
-                            placeholder="Select time" 
+                        <Form.Control
+                            type="time"
+                            placeholder="Select time"
                             value={formData.timing}
-                            onChange={(e)=> handleInputs("timing", e.target.value)}    
+                            onChange={(e) => handleInputs("timing", e.target.value)}
                         />
                     </Form.Group>
-                    <Button 
-                        variant="success" 
-                        type="submit" 
+                    <Button
+                        variant="success"
+                        type="submit"
                         className='mr-auto'
-                        onClick={()=> navigate("/quizlist")}
-                        >
+                        onClick={(e) => handleSubmit(e)}
+                    >
                         Create
                     </Button>
                 </Form>

@@ -1,24 +1,39 @@
-import { Button, Row, Table } from 'react-bootstrap'
+import { useEffect, useState } from 'react';
+import { Button, Row, Spinner, Table } from 'react-bootstrap'
 import { RiEdit2Fill } from 'react-icons/ri';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom'
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import db from '../db/firebase';
-import { useEffect, useState } from 'react';
+
 const QuizList = () => {
     const navigate = useNavigate();
     const [data, setData] = useState();
-    
-    async function getData() {
-        const citiesCol = collection(db, 'quizes');
-        const citySnapshot = await getDocs(citiesCol);
-        const cityList = citySnapshot.docs.map(doc => doc.data());
-        console.log(cityList);
+    const [loading, setLoading] = useState(false)
+
+    //  Fetches all data from db
+    const getData = async() => {
+        setLoading(true)
+        const fetchedQuiz = [];
+        const quizesCol = collection(db, 'quizes');
+        const quizSnapshot = await getDocs(quizesCol);
+        quizSnapshot.docs.map(doc => {
+            fetchedQuiz.push(doc.data())
+        });
+        setData(fetchedQuiz)
+        setLoading(false)
     }
 
     useEffect(() => {
         getData()
     }, [])
+
+    // Deletes single document by an id
+    const deleteData = async(id) => {
+        await deleteDoc(doc(db, "quizes", id))
+        const filteredData = data.filter((item) => item.id !== id);
+        setData(filteredData);
+    }
 
     return (
         <>
@@ -33,8 +48,9 @@ const QuizList = () => {
             </Row>
             <h3 className='text-center text-info mb-4'>Quiz List</h3>
             <Row>
+                {loading ? <Spinner animation="border" variant="success" className='text-center' />
+                :
                 <Table striped bordered hover variant="dark">
-
                     <thead>
                         <tr>
                             <th>Name</th>
@@ -46,19 +62,19 @@ const QuizList = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* {data?.map(item => (
-                            <tr key={item.id}>
-                                <td>{item.name}</td>
-                                <td>{item.description}</td>
-                                <td>{item.grade}</td>
-                                <td>{item.timing.seconds.toHHMMSS()}</td>
-                                <td><RiEdit2Fill className='text-primary' style={{ cursor: "pointer" }} /></td>
-                                <td><RiDeleteBin5Line className='text-danger' style={{ cursor: "pointer" }} /></td>
-                            </tr>
-                        ))
-                        } */}
+                    {data?.map(item => (
+                        <tr key={item.id}>
+                            <td>{item.name}</td>
+                            <td>{item.description}</td>
+                            <td>{item.id}</td>
+                            <td>{item.timing}</td>
+                            <td><RiEdit2Fill className='text-primary' style={{ cursor: "pointer" }} /></td>
+                            <td><RiDeleteBin5Line className='text-danger' style={{ cursor: "pointer" }} onClick={()=> {deleteData(item.id)}}/></td>
+                        </tr>
+                    ))}
                     </tbody>
                 </Table>
+                }
             </Row>
         </>
     )

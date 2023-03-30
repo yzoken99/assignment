@@ -3,7 +3,6 @@
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
-
 const firebaseConfig = {
   apiKey: "AIzaSyAJyP3cx0gXRXopFUyXAlAKWP_NSu911Kk",
   authDomain: "quizapp-6e3cb.firebaseapp.com",
