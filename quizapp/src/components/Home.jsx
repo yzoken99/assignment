@@ -1,26 +1,18 @@
-import { useState } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'
 import { addDoc, collection } from 'firebase/firestore';
 import db from '../db/firebase';
-import { v4 as uuidv4 } from 'uuid';
 
-const Home = () => {
+
+const Home = ({formData, setFormData}) => {
     const navigate = useNavigate()
-    const [formData, setFormData] = useState({
-        name: "",
-        description: "",
-        grading: "",
-        timing: "",
-        id:uuidv4()
-    })
-
+   
     const handleInputs = (field, value) => {
         setFormData({
             ...formData,
             [field]: value
         })
-    }
+    } 
 
     const handleSubmit = (e) => {
         e.preventDefault();

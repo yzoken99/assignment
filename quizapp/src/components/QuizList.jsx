@@ -5,11 +5,16 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom'
 import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import db from '../db/firebase';
+import EditQuiz from './EditQuiz';
 
 const QuizList = () => {
     const navigate = useNavigate();
     const [data, setData] = useState();
     const [loading, setLoading] = useState(false)
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     //  Fetches all data from db
     const getData = async() => {
@@ -63,15 +68,19 @@ const QuizList = () => {
                     </thead>
                     <tbody>
                     {data?.map(item => (
-                        <tr key={item.id}>
+                        <>
+                        <tr key={item.id} onClick={()=> navigate("/add")}>
                             <td>{item.name}</td>
                             <td>{item.description}</td>
                             <td>{item.id}</td>
                             <td>{item.timing}</td>
-                            <td><RiEdit2Fill className='text-primary' style={{ cursor: "pointer" }} /></td>
+                            <td><RiEdit2Fill className='text-primary' style={{ cursor: "pointer" }} onClick={handleShow}/></td>
                             <td><RiDeleteBin5Line className='text-danger' style={{ cursor: "pointer" }} onClick={()=> {deleteData(item.id)}}/></td>
                         </tr>
+                        <EditQuiz show={show} handleClose={handleClose} item={item} />
+                        </>
                     ))}
+
                     </tbody>
                 </Table>
                 }
