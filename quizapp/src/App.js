@@ -6,7 +6,6 @@ import QuizList from './components/QuizList';
 import { Route, Routes } from 'react-router-dom'
 import AddQuestionForm from './components/AddQuestionForm';
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 
 function App() {
   const [formData, setFormData] = useState({
@@ -14,7 +13,6 @@ function App() {
     description: "",
     grading: 0,
     timing: "",
-    id:uuidv4(),
     questions: [
         {
             prompt: "",

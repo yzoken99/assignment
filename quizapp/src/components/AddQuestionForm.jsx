@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { addDoc, collection } from 'firebase/firestore';
-import db from '../db/firebase';
-import { v4 as uuidv4 } from 'uuid';
 
 const AddQuestionForm = ({ quizId, formData, setFormData }) => {
   const handleAddQuestion = () => {
