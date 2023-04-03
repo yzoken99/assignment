@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Button, Row, Spinner, Table } from 'react-bootstrap'
 import { RiEdit2Fill } from 'react-icons/ri';
 import { RiDeleteBin5Line } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom'
+import { IoMdAddCircleOutline } from 'react-icons/io';
+import { Link, useNavigate } from 'react-router-dom'
 import { collection, getDocs, deleteDoc, doc, getDoc, getFirestore } from 'firebase/firestore';
 import db from '../db/firebase';
 import EditQuiz from './EditQuiz';
@@ -66,6 +67,7 @@ const QuizList = () => {
                                 <th>Description</th>
                                 <th>Grade</th>
                                 <th>Timing</th>
+                                <th>Add question</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
@@ -78,7 +80,8 @@ const QuizList = () => {
                                         <td>{item.description}</td>
                                         <td>{item.grading}</td>
                                         <td>{item.timing}</td>
-                                        <td><RiEdit2Fill className='text-primary text-center' style={{ cursor: "pointer" }} onClick={() => { getSingleDocument(item.id); handleShow() }} /></td>
+                                        <td><Link to={`/add/${item.id}`} style={{display:"-webkit-box"}}><IoMdAddCircleOutline className='text-success' style={{ cursor: "pointer" }} /></Link></td>
+                                        <td><RiEdit2Fill className='text-primary' style={{ cursor: "pointer" }} onClick={() => { getSingleDocument(item.id); handleShow() }} /></td>
                                         <td><RiDeleteBin5Line className='text-danger' style={{ cursor: "pointer" }} onClick={() => { deleteData(item.id) }} /></td>
                                     </tr>
                                 </>

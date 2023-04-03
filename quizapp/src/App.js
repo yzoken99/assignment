@@ -29,7 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home formData={formData} setFormData={setFormData}/>} />
           <Route path="/quizlist" element={<QuizList />} />
-          <Route path="/add" element={<AddQuestionForm formData={formData} setFormData={setFormData}/>} />
+          <Route path="/add/:quizId" element={<AddQuestionForm formData={formData} setFormData={setFormData}/>} />
         </Routes>
       </Container>
     </div>
