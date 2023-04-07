@@ -1,12 +1,11 @@
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'
 import { addDoc, collection } from 'firebase/firestore';
 import db from '../db/firebase';
 
 
-const Home = ({formData, setFormData}) => {
-    const navigate = useNavigate()
-   
+const Home = ({formData, setFormData, navigate}) => {
+    
+    // Handles input values and updates the current state
     const handleInputs = (field, value) => {
         setFormData({
             ...formData,
@@ -14,6 +13,8 @@ const Home = ({formData, setFormData}) => {
         })
     } 
 
+
+    // Handles form data and submits to DB
     const handleSubmit = (e) => {
         e.preventDefault();
         addDoc(collection(db, "quizes"), formData).then(() => {
@@ -22,6 +23,8 @@ const Home = ({formData, setFormData}) => {
             console.log(error);
         });
     }
+
+
     return (
         <Row className='d-flex justify-content-center app'>
             <Col md={4}>
@@ -58,6 +61,7 @@ const Home = ({formData, setFormData}) => {
                         <Form.Label>Timing</Form.Label>
                         <Form.Control
                             type="time"
+                            step="1"
                             placeholder="Select time"
                             value={formData.timing}
                             onChange={(e) => handleInputs("timing", e.target.value)}

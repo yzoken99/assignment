@@ -6,16 +6,18 @@ import db from "../db/firebase";
 const EditQuiz = ({ show, handleClose, singleQuiz, setSingleQuiz , getData}) => {
     const [isUpdated, setIsUpdated] = useState(false)
 
+    // Handles input values when they change and updates the state
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setSingleQuiz({ ...singleQuiz, [name]: value });
     }
 
+    // Updates the form values of selected quiz here in db as well! 
     const handleUpdate = (e) => {
         e.preventDefault();
         setIsUpdated(true)
-        const examcollref = doc(db, 'quizes', singleQuiz.id)
-        updateDoc(examcollref, singleQuiz)
+        const quizColRef = doc(db, 'quizes', singleQuiz.id)
+        updateDoc(quizColRef, singleQuiz)
             .then(() => {
                 setTimeout(() => {
                     setIsUpdated(false)
@@ -36,12 +38,11 @@ const EditQuiz = ({ show, handleClose, singleQuiz, setSingleQuiz , getData}) => 
                         Successfully updated !
                     </Alert> :
                         <Modal.Header closeButton>
-                            <Modal.Title>Modal heading</Modal.Title>
+                            <Modal.Title className='text-info'>Edit quiz</Modal.Title>
                         </Modal.Header>
                 }
                 <Modal.Body>
                     <Form>
-                        <h1 className='text-info text-center my-2'>Edit quiz</h1>
                         <Form.Group className="mb-3">
                             <Form.Label>Name</Form.Label>
                             <Form.Control
@@ -76,6 +77,7 @@ const EditQuiz = ({ show, handleClose, singleQuiz, setSingleQuiz , getData}) => 
                             <Form.Label>Timing</Form.Label>
                             <Form.Control
                                 type="time"
+                                step="1"
                                 placeholder="Select time"
                                 name="timing"
                                 value={singleQuiz?.timing || ''}
@@ -84,11 +86,18 @@ const EditQuiz = ({ show, handleClose, singleQuiz, setSingleQuiz , getData}) => 
                         </Form.Group>
                     </Form>
                 </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                <Modal.Footer className="d-flex justify-content-between">
+                    <Button 
+                        variant="danger" 
+                        onClick={handleClose}
+                    >
                         Close
                     </Button>
-                    <Button variant="primary" type="submit" onClick={handleUpdate}>
+                    <Button 
+                        variant="success" 
+                        type="submit" 
+                        onClick={handleUpdate}
+                    >
                         Save Changes
                     </Button>
                 </Modal.Footer>
