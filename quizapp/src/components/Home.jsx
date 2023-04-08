@@ -1,6 +1,6 @@
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import { addDoc, collection } from 'firebase/firestore';
-import db from '../db/firebase';
+import db from '../db/firebase.config';
 
 
 const Home = ({formData, setFormData, navigate}) => {
@@ -73,7 +73,7 @@ const Home = ({formData, setFormData, navigate}) => {
                         className='mr-auto'
                         onClick={(e) => handleSubmit(e)}
                     >
-                        Create
+                        Create Quiz
                     </Button>
                 </Form>
             </Col>

@@ -2,7 +2,7 @@ import { collection, doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row, Spinner } from "react-bootstrap"
 import { useParams } from "react-router-dom"
-import db from "../db/firebase";
+import db from "../db/firebase.config";
 
 const TakeQuiz = ({ setIsLoading, isLoading, navigate }) => {
 

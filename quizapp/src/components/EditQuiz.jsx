@@ -1,7 +1,7 @@
 import { doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
-import db from "../db/firebase";
+import db from "../db/firebase.config";
 
 const EditQuiz = ({ show, handleClose, singleQuiz, setSingleQuiz , getData}) => {
     const [isUpdated, setIsUpdated] = useState(false)

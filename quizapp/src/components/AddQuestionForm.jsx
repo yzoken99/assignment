@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { Form, Button, Row, Col, Alert } from 'react-bootstrap';
 import { addDoc, collection } from 'firebase/firestore';
 import { useParams } from 'react-router-dom';
-import db from '../db/firebase';
+import db from '../db/firebase.config';
 
 const AddQuestionForm = ({ formData, setFormData, isLoading, setIsLoading, navigate }) => {
   const { quizId } = useParams()
@@ -253,7 +252,7 @@ const AddQuestionForm = ({ formData, setFormData, isLoading, setIsLoading, navig
                   variant="success"
                   onClick={submitQuestion}
                 >
-                  Create
+                  Create Question
                 </Button>
 
               </div>

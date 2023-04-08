@@ -6,8 +6,8 @@ import { IoMdAddCircleOutline } from 'react-icons/io';
 import { MdOutlineNotStarted } from 'react-icons/md';
 import { Link } from 'react-router-dom'
 import { collection, getDocs, deleteDoc, doc, getDoc } from 'firebase/firestore';
-import db from '../db/firebase';
 import EditQuiz from './EditQuiz';
+import db from '../db/firebase.config';
 
 const QuizList = ({setIsLoading, isLoading, navigate}) => {
 
