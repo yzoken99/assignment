@@ -43,6 +43,7 @@ const Home = ({formData, setFormData, navigate}) => {
                         <Form.Label>Description</Form.Label>
                         <Form.Control
                             as="textarea"
+                            placeholder="Enter description"
                             rows={3}
                             value={formData.description}
                             onChange={(e) => handleInputs("description", e.target.value)}
@@ -52,7 +53,6 @@ const Home = ({formData, setFormData, navigate}) => {
                         <Form.Label>Grading Point</Form.Label>
                         <Form.Control
                             type="number"
-                            placeholder="Enter grading"
                             value={formData.grading}
                             onChange={(e) => handleInputs("grading", e.target.value)}
                         />
@@ -62,7 +62,6 @@ const Home = ({formData, setFormData, navigate}) => {
                         <Form.Control
                             type="time"
                             step="1"
-                            placeholder="Select time"
                             value={formData.timing}
                             onChange={(e) => handleInputs("timing", e.target.value)}
                         />
