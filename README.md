@@ -20,7 +20,7 @@ This app uses Firebase to store quiz data. Please make sure you have set up a Fi
 This app has been thoroughly tested to ensure that it is working as expected.
 
 # Deployment <br/>
-I used https://www.netlify.com to deploy this app 
+I used https://firebase.google.com/ to deploy this app 
 
 # Contributors <br/>
 This app was created by Izzatillo. If you would like to contribute to this project, please submit a pull request or contact me.
